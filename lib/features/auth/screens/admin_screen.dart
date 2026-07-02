@@ -52,8 +52,6 @@ class _AdminScreenState extends State<AdminScreen> {
           // فحص حجم الملف
           final bytes = await file.readAsBytes();
           if (bytes.lengthInBytes > 5 * 1024 * 1024) {
-            // 5MB limit
-            print("File skipped: Too large (${file.name})");
             continue;
           }
 
@@ -69,7 +67,7 @@ class _AdminScreenState extends State<AdminScreen> {
             supabase.storage.from('product_images').getPublicUrl(fileName),
           );
         } catch (e) {
-          print("Error uploading specific file ${file.name}: $e");
+          AppError.getUserMessage(e);
         }
       }
 

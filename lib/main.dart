@@ -15,12 +15,20 @@ late final GoRouter _router;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: '.env');
-
-  await Supabase.initialize(
-    url: dotenv.env['SUPABASE_URL']!,
-    anonKey: dotenv.env['SUPABASE_ANON_KEY']!,
-  );
+  try {
+    await dotenv.load(fileName: '.env');
+  } catch (_) {
+    // .env غير موجود، نعتمد على --dart-define
+  }
+  const supabaseUrl = String.fromEnvironment('SUPABASE_URL');
+  const supabaseAnonKey = String.fromEnvironment('SUPABASE_ANON_KEY');
+  final url = supabaseUrl.isNotEmpty
+      ? supabaseUrl
+      : dotenv.env['SUPABASE_URL'] ?? '';
+  final anonKey = supabaseAnonKey.isNotEmpty
+      ? supabaseAnonKey
+      : dotenv.env['SUPABASE_ANON_KEY'] ?? '';
+  await Supabase.initialize(url: url, anonKey: anonKey);
   runApp(
     MultiProvider(
       providers: [

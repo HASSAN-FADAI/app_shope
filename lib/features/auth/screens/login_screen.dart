@@ -7,7 +7,8 @@ import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  final String? redirect;
+  const LoginScreen({super.key, this.redirect});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -31,6 +32,10 @@ class _LoginScreenState extends State<LoginScreen> {
     final auth = context.read<AuthProvider>();
     auth.clearError();
     await auth.signIn(_emailCtrl.text.trim(), _passwordCtrl.text);
+
+    if (mounted && auth.isAuthenticated) {
+      context.go(widget.redirect ?? '/');
+    }
   }
 
   @override
@@ -233,7 +238,16 @@ xxxxxxxxxx'''),
                         const SizedBox(height: 16),
                         TextButton(
                           onPressed: () => context.go('/signup'),
-                          child: const Text("Don't have an account? Sign Up"),
+                          child:
+                              const Text("Don't have an account? Sign Up"),
+                        ),
+                        const SizedBox(height: 4),
+                        TextButton(
+                          onPressed: () => context.go('/'),
+                          child: const Text(
+                            'الرجوع للتصفح',
+                            style: TextStyle(color: Colors.grey),
+                          ),
                         ),
                       ],
                     ),
