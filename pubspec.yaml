@@ -37,7 +37,6 @@ dependencies:
   http: ^1.6.0
   provider: ^6.1.5+1
   google_fonts: ^8.1.0
-  flutter_dotenv: ^5.2.1
 
 dev_dependencies:
   flutter_test:
@@ -65,7 +64,6 @@ flutter:
     - assets/images/sub_person.png
     - assets/images/light_blue_bg_waves.png
     - assets/images/Pngtree_book_store.png
-    - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
