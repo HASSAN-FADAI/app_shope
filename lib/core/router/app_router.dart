@@ -44,10 +44,7 @@ GoRouter appRouter(AuthProvider auth) {
       return null;
     },
     routes: [
-      GoRoute(
-        path: '/',
-        builder: (_, _) => const CustomerMainScreen(),
-      ),
+      GoRoute(path: '/', builder: (_, _) => const CustomerMainScreen()),
       GoRoute(
         path: '/login',
         builder: (_, state) {
@@ -56,25 +53,16 @@ GoRouter appRouter(AuthProvider auth) {
         },
       ),
       GoRoute(path: '/signup', builder: (_, _) => const SignupScreen()),
-      GoRoute(
-        path: '/products',
-        builder: (_, _) => const ProductScreen(),
-      ),
+      GoRoute(path: '/products', builder: (_, _) => const ProductScreen()),
       GoRoute(
         path: '/product/:id',
         builder: (context, state) {
           final id = state.pathParameters['id']!;
-          final product =
-              context.read<ProductProvider>().products.firstWhere(
-                    (p) => p.id == id,
-                    orElse: () => Product(
-                      id: id,
-                      title: '',
-                      price: 0,
-                      images: [],
-                      describe: '',
-                    ),
-                  );
+          final product = context.read<ProductProvider>().products.firstWhere(
+            (p) => p.id == id,
+            orElse: () =>
+                Product(id: id, title: '', price: 0, images: [], describe: ''),
+          );
           return ProductDetailsScreen(product: product);
         },
       ),

@@ -298,6 +298,7 @@ class _ProductCardState extends State<ProductCard> {
 
   @override
   Widget build(BuildContext context) {
+    final isAdmin = context.watch<AuthProvider>().user?.isAdmin ?? false;
     return GestureDetector(
       onTap: widget.onTap,
       child: Container(
@@ -426,12 +427,13 @@ class _ProductCardState extends State<ProductCard> {
 
                       SizedBox(width: 6),
 
-                      IconButton(
-                        icon: const Icon(
-                          Icons.remove_circle_outline,
-                          color: Colors.red,
-                        ),
-                        onPressed: () async {
+                      if (isAdmin)
+                        IconButton(
+                          icon: const Icon(
+                            Icons.remove_circle_outline,
+                            color: Colors.red,
+                          ),
+                          onPressed: () async {
                           try {
                             await context.read<ProductProvider>().removeProduct(
                               widget.product.id,
